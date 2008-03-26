@@ -1,0 +1,35 @@
+Todo list :
+
+. We may have a preference dialog box (where we should define the number 
+  of atomic test we want to do (2, 10, 1000, ...), the increment (*2, *10,
+  *...), the max number of threads and their increment (+1, +2, *2, ...)
+. We may add a preference tab for each test (which will be filled with 
+  the test itself)
+. We may save the preferences to a user defined dir and file eg '.gstressfs'
+. Add gnuplot ready output files, draw png files, export raw data (rusage,
+  number of threads, time and so on).
+. Add some utility functions such as a poisson law array initializer and a
+  struct to cary this (may be usefull for example when one wants to add sleeps
+  for a particular test, in order that the sleeps will be them same for each
+  tests (we can think of a modified file creation test that would create files
+  with size based on a poisson law))
+. Add a new function to do tests mixing varying functions (and not doing one
+  after the other). Add a new struct and a new function to let the user decide 
+  a specific order eg (list order, random order, reverse, ...). Ideally this 
+  should be user defined in a tab preference.
+
+Already Done :
+
+. May be we should allow some variations in the tests -> vary function list
+  that the user must define himself. This lists must contain functions that
+  will be called upon a particular varying test. A varying function will be
+  called until it returns FALSE. So you MUST define a conditional stop that
+  will return FALSE. You can define more than one varying function. If so 
+  each of them will be called one after the other (when one finishes with
+  FALSE, then the next varying function is called). Thoses functions takes
+  two parameters : 1. the test itself (struct test_t) and a gboolean. This
+  boolean indicates whether the function should initialize itself or not
+  (TRUE is for init time and FALSE is for normal varying). Init is called
+  two times : one before the test (to init initial conditions) and one
+  after the test to put initial conditions back for this test in order to
+  avoid side effects)

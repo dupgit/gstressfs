@@ -1,0 +1,57 @@
+06.03.2008 Olivier Delhomme <olivierdelhomme@gmail.com>
+	   * Added tests to avoid seg fault when the filesystem
+	     hangs out (unable to create a new directory)
+	     Added a new test in file_creation that creates one file
+	     of a defined size (from 4k to 1M)
+	
+05.03.2008 Olivier Delhomme <olivierdelhomme@gmail.com>
+	   * Added a new menu function that group functions together
+	   * Added varying function list that collects functions that
+	     may help to vary some parameters. Thoses functions works
+	     with run_one_test_many_threaded_increasing function.
+	   * In file_creation.c, for increased performances moved a 
+	     g_malloc and g_free couple out of the test function in 
+	     order that it only runs one time instead of hundreds of 
+	     thousand ! If we want some buffer varying function we may
+	     add this couple to the varying function itself !
+	   * Passed file_size type from guint to guint64.
+	   * rusage statistics collection (Still a lot of work to do
+	     with threads and for printing them out !)
+	
+22.02.2008 Olivier Delhomme <olivierdelhomme@gmail.com>
+	   * Simplified the exec directory name handling
+	   * All tests are running in their own sub-directories
+	   * Changed the initialisation for the tests in order
+	     that each initialisation can initiate more than on test
+	   * Clarified a bit README file in order that people understand
+	     howto make new tests
+	   * Changed #define name to be more clear and less confusing
+	
+21.02.2008 Olivier Delhomme <olivierdelhomme@gmail.com>
+	   * Added a percent gfloat in test_t structure to reflect the 
+	     percentage realised of the test running (until it gets an 
+	     error).
+	   * More thread safe
+	   * Added test menus and submenus (one test, many tests) still to
+	     code threaded tests, all tests and more ?
+	
+20.02.2008 Olivier Delhomme <olivierdelhomme@gmail.com>
+	   * Now depends on libduptools and no more on liblats
+	
+19.02.2008 Olivier Delhomme <olivierdelhomme@gmail.com>
+	   * Added private data to the file_creation test (as an example)
+	
+18.02.2008 Olivier Delhomme <olivierdelhomme@gmail.com>
+	   * Added a timer to know the execution time
+	   * Added a threaded test system
+	
+08.02.2008 Olivier Delhomme <olivierdelhomme@gmail.com>
+	   * Added one basic test (file_creation)
+	   * Added basic testing features (multiples times, incrementation)
+	
+07.02.2008 Olivier Delhomme <olivierdelhomme@gmail.com>
+	   * Added first glade interface
+	
+06.02.2008 Olivier Delhomme <olivierdelhomme@gmail.com>
+	   * Project creation & skeletton
+	     - depends on liblats and libglade

@@ -1,0 +1,19 @@
+This project will provide a base to write tests. The aim is to stress a
+filesystem. As there is many type of filesystem and that some of them are
+also networked (meaning that all computing is not only done by the machine
+where the program runs) there is no special data retrieved (say some cpu
+utilisation, I/O bandwidth and so on). This should be done with other tools
+such as munin, nagios, and so on... .
+
+Every one is encouraged to write a test for a specific case.
+
+When creating a new test please note the following : 
+ - Add new files (my_test.c and include/my_test.h) to src/Makefile.am
+ - Include my_test.h in gstressfs.h (at the end)
+ - All tests should be considered as atomic (the test framework does so)
+   but you can write non atomic tests, it only means that they'll run
+   much more times (see creation_file as an example)
+ - Keep in mind that your atomic test will be threaded, so do not write
+   in your private datas (as there is no mutex capabilities and no
+   memory copy, you may experiment funny things coarse to debug !).
+ 
