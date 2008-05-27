@@ -1,3 +1,7 @@
+27.04.2008 Olivier Delhomme <olivierdelhomme@gmail.com>
+	   * Modified the calls to the libduptools to
+	     refer the new 0.0.4 API
+
 06.03.2008 Olivier Delhomme <olivierdelhomme@gmail.com>
 	   * Added tests to avoid seg fault when the filesystem
 	     hangs out (unable to create a new directory)

@@ -71,11 +71,11 @@ static void log_all_reconnized_test(main_struct_t *main_struct)
 	test_t *one_test = NULL;
 	GList *test_list = main_struct->test_list;
 
-	log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("List of tests :"));
+	ldt_log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("List of tests :"));
 	while (test_list != NULL)
 		{
 			one_test = (test_t *) test_list->data;
-			log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, "\t%s (%s)", one_test->name, one_test->dirname);
+			ldt_log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, "\t%s (%s)", one_test->name, one_test->dirname);
 			test_list = g_list_next(test_list);
 		}
 }
@@ -297,7 +297,7 @@ static gboolean build_and_create_directory_name(main_struct_t *main_struct, test
 
 	if (result != 0)
 		{
-			log_message(main_struct->log, G_LOG_LEVEL_WARNING, _("Error while creating %s directory"), new_name);
+			ldt_log_message(main_struct->log, G_LOG_LEVEL_WARNING, _("Error while creating %s directory"), new_name);
 			ok = FALSE;
 		}
 	   
@@ -398,7 +398,7 @@ static gboolean run_one_test_increasing(main_struct_t *main_struct, test_t *one_
 					getrusage(RUSAGE_CHILDREN, rusage);
 					exec_time = new_exec_time_t(i, 1, time, rusage);
 					one_test->exec_time_list = g_list_append(one_test->exec_time_list, exec_time);
-					log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("%s ran %d times and took %f seconds"), one_test->name, i, time);
+					ldt_log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("%s ran %d times and took %f seconds"), one_test->name, i, time);
 
 					/* Directory cleaning */
 					remove_test_directory(main_struct, one_test);
@@ -413,7 +413,7 @@ static gboolean run_one_test_increasing(main_struct_t *main_struct, test_t *one_
 
 	if (ok == FALSE)
 		{
-			log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("%s crashed at %f %% when running multiple times at %f %%!"), one_test->name, one_test->percent*100, (gfloat)sum / (gfloat) one_test->max_nb);
+			ldt_log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("%s crashed at %f %% when running multiple times at %f %%!"), one_test->name, one_test->percent*100, (gfloat)sum / (gfloat) one_test->max_nb);
 		}
 
 	return ok;
@@ -466,7 +466,7 @@ static void threaded_run(gpointer user_data)
 
 	if (ok == FALSE)
 		{
-			log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("%s crashed : thread n° %d at %f %% !"), one_test->name, nthread, one_test->percent*100);
+			ldt_log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("%s crashed : thread n° %d at %f %% !"), one_test->name, nthread, one_test->percent*100);
 		}
 
 	free_thread_t(thread); /* we won't use that datas anymore */
@@ -561,7 +561,7 @@ static gboolean run_one_test_threaded_increasing(main_struct_t *main_struct, tes
 					/* Directory cleaning */
 					remove_test_directory(main_struct, one_test);
 
-					log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("%s ran in %d threads and took %f seconds"), one_test->name, i, time);
+					ldt_log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("%s ran in %d threads and took %f seconds"), one_test->name, i, time);
 
 					i++;
 				}
@@ -612,7 +612,7 @@ static gboolean run_one_test_many_threaded_increasing(main_struct_t *main_struct
 					/* Directory cleaning */
 					remove_test_directory(main_struct, one_test);
 
-					log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("%s ran in %d threads and took %f seconds"), one_test->name, i, time);
+					ldt_log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("%s ran in %d threads and took %f seconds"), one_test->name, i, time);
 
 					i++;
 				}
@@ -647,17 +647,17 @@ static gboolean run_one_test_varying(main_struct_t *main_struct, test_t *one_tes
 				{
 					if (one_test->test_conditions != NULL)
 						{
-							log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, one_test->test_conditions, one_test->name);
+							ldt_log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, one_test->test_conditions, one_test->name);
 						}
 					else
 						{
-							log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Unknown test conditions"), one_test->name);
+							ldt_log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Unknown test conditions"), one_test->name);
 						}
 
 					test_ok = run_one_test_many_threaded_increasing(main_struct, one_test);
 
 					/*
-					  log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Waiting 10s for the system to calm down !"), one_test->name);
+					  ldt_log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Waiting 10s for the system to calm down !"), one_test->name);
 					  g_usleep(10*G_USEC_PER_SEC);
 					*/
 
@@ -692,7 +692,7 @@ static void menu_run_all(GtkWidget *widget, gpointer data)
 
   if (main_struct->dirname != NULL)
 	  {
-		  log_message(main_struct->log, G_LOG_LEVEL_DEBUG, "dirname : %s", main_struct->dirname);
+		  ldt_log_message(main_struct->log, G_LOG_LEVEL_DEBUG, "dirname : %s", main_struct->dirname);
 		  test_list = main_struct->test_list;
 
 		  while (test_list != NULL && ok == TRUE)
@@ -700,18 +700,18 @@ static void menu_run_all(GtkWidget *widget, gpointer data)
 				  one_test = (test_t *) test_list->data;
 				  if (one_test != NULL)
 					  {
-						  log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Now Running %s test (many, threaded and many threaded !)"), one_test->name);
+						  ldt_log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Now Running %s test (many, threaded and many threaded !)"), one_test->name);
 						  ok = run_one_test_increasing(main_struct, one_test);
 						  ok = ok && run_one_test_threaded_increasing(main_struct, one_test);
 						  ok = ok && run_one_test_many_threaded_increasing(main_struct, one_test);
 
 						  if (ok != TRUE)
 							  { 
-								  log_message(main_struct->log, G_LOG_LEVEL_WARNING, _("Something went wrong with test %s"), one_test->name);
+								  ldt_log_message(main_struct->log, G_LOG_LEVEL_WARNING, _("Something went wrong with test %s"), one_test->name);
 							  }
 						  else 
 							  {
-								  log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Done !"));
+								  ldt_log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Done !"));
 							  }
 					  }
 				  test_list = g_list_next(test_list);
@@ -783,7 +783,7 @@ static void menu_run_one_test(GtkWidget *widget, gpointer data)
 
 	if (one_test != NULL)
 		{
-			log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Selected test : %s"), one_test->name);
+			ldt_log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Selected test : %s"), one_test->name);
 
 			if (main_struct->dirname == NULL)
 				{
@@ -795,7 +795,7 @@ static void menu_run_one_test(GtkWidget *widget, gpointer data)
 					/* directory making */
 					if (build_and_create_directory_name(main_struct, one_test, main_struct->dirname, 1, 1) == TRUE)
 						{
-							log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Now Running %s test (%s)"), one_test->name, one_test->exec_dirname);
+							ldt_log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Now Running %s test (%s)"), one_test->name, one_test->exec_dirname);
 
 							/* The test is started (and will run 1 time) */
 							g_timer_start(timer);
@@ -808,16 +808,16 @@ static void menu_run_one_test(GtkWidget *widget, gpointer data)
 							getrusage(RUSAGE_CHILDREN, rusage);
 							exec_time = new_exec_time_t(1, 1, time, rusage);
 							one_test->exec_time_list = g_list_append(one_test->exec_time_list, exec_time);
-							log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("%s ran and took %f seconds"), one_test->name, time);
+							ldt_log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("%s ran and took %f seconds"), one_test->name, time);
 							remove_test_directory(main_struct, one_test);
 
 							if (ok != TRUE)
 								{ 
-									log_message(main_struct->log, G_LOG_LEVEL_WARNING, _("Something went wrong with test %s"), one_test->name);
+									ldt_log_message(main_struct->log, G_LOG_LEVEL_WARNING, _("Something went wrong with test %s"), one_test->name);
 								}
 							else
 								{
-									log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Done !"));
+									ldt_log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Done !"));
 								}
 						}
 					else
@@ -844,7 +844,7 @@ static void menu_run_many_tests(GtkWidget *widget, gpointer data)
 
 	if (one_test != NULL)
 		{
-			log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Selected test : %s"), one_test->name);
+			ldt_log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Selected test : %s"), one_test->name);
 
 			if (main_struct->dirname == NULL)
 				{
@@ -853,17 +853,17 @@ static void menu_run_many_tests(GtkWidget *widget, gpointer data)
 
 			if (main_struct->dirname != NULL)
 				{
-					log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Now Running %s test"), one_test->name);
+					ldt_log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Now Running %s test"), one_test->name);
 
 					ok = run_one_test_increasing(main_struct, one_test);
 
 					if (ok != TRUE)
 						{ 
-							log_message(main_struct->log, G_LOG_LEVEL_WARNING, _("Something went wrong with test %s"), one_test->name);
+							ldt_log_message(main_struct->log, G_LOG_LEVEL_WARNING, _("Something went wrong with test %s"), one_test->name);
 						}
 					else
 						{
-							log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Done !"));
+							ldt_log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Done !"));
 						}
 					
 				}
@@ -894,17 +894,17 @@ static void menu_run_threaded_tests(GtkWidget *widget, gpointer data)
 
 			if (main_struct->dirname != NULL)
 				{
-					log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Now Running %s test"), one_test->name);
+					ldt_log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Now Running %s test"), one_test->name);
 
 					ok = run_one_test_threaded_increasing(main_struct, one_test);
 
 					if (ok != TRUE)
 						{ 
-							log_message(main_struct->log, G_LOG_LEVEL_WARNING, _("Something went wrong with test %s"), one_test->name);
+							ldt_log_message(main_struct->log, G_LOG_LEVEL_WARNING, _("Something went wrong with test %s"), one_test->name);
 						}
 					else
 						{
-							log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Done !"));
+							ldt_log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Done !"));
 						}
 				}
 		}
@@ -934,17 +934,17 @@ static void menu_run_many_threaded_tests(GtkWidget *widget, gpointer data)
 
 			if (main_struct->dirname != NULL)
 				{
-					log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Now Running %s test"), one_test->name);
+					ldt_log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Now Running %s test"), one_test->name);
 
 					ok = run_one_test_many_threaded_increasing(main_struct, one_test);
 
 					if (ok != TRUE)
 						{ 
-							log_message(main_struct->log, G_LOG_LEVEL_WARNING, _("Something went wrong with test %s"), one_test->name);
+							ldt_log_message(main_struct->log, G_LOG_LEVEL_WARNING, _("Something went wrong with test %s"), one_test->name);
 						}
 					else
 						{
-							log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Done !"));
+							ldt_log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Done !"));
 						}
 				}
 		}
@@ -974,17 +974,17 @@ static void menu_run_vary(GtkWidget *widget, gpointer data)
 
 			if (main_struct->dirname != NULL)
 				{
-					log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Now Running %s test"), one_test->name);
+					ldt_log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Now Running %s test"), one_test->name);
 
 					ok = run_one_test_varying(main_struct, one_test);
 
 					if (ok != TRUE)
 						{ 
-							log_message(main_struct->log, G_LOG_LEVEL_WARNING, _("Something went wrong with test %s"), one_test->name);
+							ldt_log_message(main_struct->log, G_LOG_LEVEL_WARNING, _("Something went wrong with test %s"), one_test->name);
 						}
 					else
 						{
-							log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Done !"));
+							ldt_log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("Done !"));
 						}
 				}
 		}
@@ -1223,7 +1223,7 @@ static void connect_signals(main_struct_t *main_struct)
  */
 static gboolean load_xml_interface(main_struct_t *main_struct)
 {
-  main_struct->xml = load_glade_xml_file(main_struct->location_list, "gstressfs.glade");
+  main_struct->xml = ldt_load_glade_xml_file(main_struct->location_list, "gstressfs.glade");
 
   if (main_struct->xml == NULL)
     return FALSE;
@@ -1236,10 +1236,11 @@ static gboolean load_xml_interface(main_struct_t *main_struct)
  */
 static void init_international_languages(void)
 {
-  gchar *locale_dir = NULL;
   gchar *result = NULL;
 
 #ifdef WINDOWS
+  gchar *locale_dir = NULL;
+
   locale_dir = g_strdup_printf("%s\\locale", g_get_current_dir());
   result = bindtextdomain(GETTEXT_PACKAGE, locale_dir);
   g_free(locale_dir);
@@ -1264,7 +1265,7 @@ static main_struct_t *init_main_struct(void)
   if (main_struct != NULL)
     {
       main_struct->xml = NULL;     /* Glade XML interface */
-      main_struct->location_list = init_location_list(NULL, "gstressfs"); /* localisation list  */
+      main_struct->location_list = ldt_init_location_list(NULL, "gstressfs"); /* localisation list  */
       main_struct->log = NULL;     /* log system */
 	  main_struct->dirname = NULL;
 	  main_struct->test_list = init_test_list(main_struct);
@@ -1283,7 +1284,7 @@ static void init_log_window(main_struct_t *main_struct)
   GtkTextView *textview = GTK_TEXT_VIEW(glade_xml_get_widget(main_struct->xml, "log_textview"));
 
   /* adds the textview to the log system */
-  main_struct->log = init_log_domain(textview, ProgName, TRUE); /* PROGRAM_DEBUG); */
+  main_struct->log = ldt_init_log_domain(textview, ProgName, TRUE); /* PROGRAM_DEBUG); */
 }
 
 
@@ -1305,7 +1306,7 @@ static void init_interface(main_struct_t *main_struct)
   gtk_widget_show_all(glade_xml_get_widget(main_struct->xml, "main_window"));
 
   /* Welcome message */
-  log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("GstressFS - Version %s - Date %s - %s"), ProgVersion, ProgDate, ProgAuthor);
+  ldt_log_message(main_struct->log, G_LOG_LEVEL_MESSAGE, _("GstressFS - Version %s - Date %s - %s"), ProgVersion, ProgDate, ProgAuthor);
 
   /* Logging all available tests  */
   log_all_reconnized_test(main_struct);
