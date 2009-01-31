@@ -1094,14 +1094,14 @@ static void create_sub_menus(main_struct_t *main_struct, GtkWidget *menu_stress,
 					 G_CALLBACK(menu_run_many_tests), main_struct);
 	gtk_widget_show(nmi_many);
 
-	nmi_threaded = gtk_menu_item_new_with_label(_("Many threaded runs"));
+	nmi_threaded = gtk_menu_item_new_with_label(_("Many threaded of one atomic runs"));
 	gtk_widget_set_name(nmi_threaded, one_test->name);
 	gtk_menu_shell_append(GTK_MENU_SHELL(new_submenu), nmi_threaded);	
 	g_signal_connect(G_OBJECT(nmi_threaded), "activate", 
 					 G_CALLBACK(menu_run_threaded_tests), main_struct);
 	gtk_widget_show(nmi_threaded);
 
-	nmi_threaded_many = gtk_menu_item_new_with_label(_("Many threaded runs many times"));
+	nmi_threaded_many = gtk_menu_item_new_with_label(_("Many threaded of many atomic runs"));
 	gtk_widget_set_name(nmi_threaded_many, one_test->name);
 	gtk_menu_shell_append(GTK_MENU_SHELL(new_submenu), nmi_threaded_many);	
 	g_signal_connect(G_OBJECT(nmi_threaded_many), "activate", 
@@ -1310,8 +1310,6 @@ static void init_interface(main_struct_t *main_struct)
 
   /* Logging all available tests  */
   log_all_reconnized_test(main_struct);
-
-  
 }
 
 /** 

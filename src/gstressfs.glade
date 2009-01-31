@@ -123,7 +123,7 @@
           </packing>
         </child>
         <child>
-          <widget class="GtkScrolledWindow" id="scrolledwindow">
+          <widget class="GtkScrolledWindow" id="scrolledwindow1">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
@@ -133,7 +133,6 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                <property name="editable">False</property>
               </widget>
             </child>
           </widget>

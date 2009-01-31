@@ -1,7 +1,7 @@
 #! /bin/sh
 
-aclocal                               \
-&& libtoolize                         \
+aclocal \
+&& libtoolize \
 && automake --gnu --add-missing -a -c \
 && autoconf
 glib-gettextize --copy --force 
@@ -15,7 +15,7 @@ if [ -e ./configure ]; then
 else
     echo
     echo "Failure building the configure script."
-    echo "You may miss required tools (aclocal >1.9, libtoolize, automake >1.9, autoconf 2.5x) to build gstressfs"
+    echo "You may miss required tools (aclocal 1.9, libtoolize, automake 1.9, autoconf 2.5x) to build gstressfs"
     echo "Please install the appropriated package and re-run autogen.sh"
     echo "This might also happen if you don't have the m4 provided as a subdirectory in this package in the directory"
     echo "where aclocal will find them. Just copy ./m4/* in, usually, /usr/share/aclocal."
