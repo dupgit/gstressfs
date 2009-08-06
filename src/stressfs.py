@@ -45,9 +45,9 @@ def usage() :
 #
 
 
-def parse_command_line() :
-	short_options = "h"
-	long_options = ["help"]
+def parse_command_line(stressfs) :
+	short_options = "hl"
+	long_options = ["help", "list"]
 
 	# Read options and arguments  
 	try:
@@ -59,24 +59,55 @@ def parse_command_line() :
 		sys.exit(2)
 	
 	for opt, arg in opts:
-		print "opt = ",opt
-		print "arg = ",arg
+#		print "opt = " + opt
+#		print "arg = " + arg
 		
 		if opt in ("-h", "--help") :
-			usage();
+			usage()
+			sys.exit(0)
+		elif opt in ("l", "--list") :
+			stressfs.list_tests()
+			sys.exit(0)
+
+	stressfs.run_test_suite()
+	stressfs.print_stats()
+			
 			
 #
 
-def my_first_test() :
+def my_first_test(path) :
 	
-	print 'This is my first test'
+	for i in range(10) :
+		dir = path + '/' + str(i)
+		try :
+			os.mkdir(dir)
+		except OSError, err :
+			print str(err)
+#
+
+def my_second_test(path) :
 	
+	print 'A second test !!! $$ ' + path
+	j = 1
+	for i in range(10000) :
+		j *= 2
+#
 
 
-# parse_command_line()
+def main () :
 
-stressfs = stress.Test("Mon premier test")
-stressfs.start()
-stressfs.execute = my_first_test
-stressfs.start()
-print stressfs.testname
+	test1 = stress.Test('directory creation', my_first_test)
+	test2 = stress.Test('deuxieme', my_second_test)
+
+	stressfs = stress.TestSuite('Files', '/home/dup/tmp/stressfs')
+	stressfs.add_test(test1)
+	stressfs.add_test(test2)
+
+	parse_command_line(stressfs)
+	
+# main function
+
+
+if __name__=="__main__" :
+  main()
+
