@@ -1,3 +1,7 @@
+23.08.2009 Olivier Delhomme <olivier.delhomme@free.fr>
+	   * Commited holliday's work and creating a new python
+             branch and moving all python stuff to it !
+
 27.04.2008 Olivier Delhomme <olivierdelhomme@gmail.com>
 	   * Modified the calls to the libduptools to
 	     refer the new 0.0.4 API
