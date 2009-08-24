@@ -1,6 +1,14 @@
+06.08.2009 Olivier Delhomme <olivier.delhomme@free.fr>
+       * Python seem very simple and powerfull, this is getting better and
+	     better
+
+04.08.2009 Olivier Delhomme <olivier.delhomme@free.fr>
+	   * beginning things in python
+
 23.08.2009 Olivier Delhomme <olivier.delhomme@free.fr>
 	   * Commited holliday's work and creating a new python
              branch and moving all python stuff to it !
+
 
 27.04.2008 Olivier Delhomme <olivierdelhomme@gmail.com>
 	   * Modified the calls to the libduptools to
